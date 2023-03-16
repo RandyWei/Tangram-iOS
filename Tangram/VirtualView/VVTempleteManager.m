@@ -100,6 +100,11 @@
     //目前来说，先获取TangramKit的全量组件列表，把type拿出来
     //从 TangramKitVVElementTypeMap.plist里面拿
     NSString *vvElementMapPath = [[NSBundle mainBundle] pathForResource:@"TangramKitVVElementTypeMap" ofType:@"plist"];
+    // 代码修改
+    if (vvElementMapPath == nil) {
+        vvElementMapPath = [[NSBundle bundleForClass:[VVTempleteManager class]] pathForResource:@"TangramKitVVElementTypeMap" ofType:@"plist"];
+    }
+    //+++++++
     NSArray *vvElementArrayFromPlist = [NSArray arrayWithContentsOfFile:vvElementMapPath];
     for (NSDictionary *dict in vvElementArrayFromPlist) {
         NSString *key = [dict tm_stringForKey:@"type"];
@@ -137,6 +142,11 @@
         //如果是本地的模板的话，直接version = 1
         NSString *localFileName = [self.localTempleteDict tm_stringForKey:templeteType];
         NSString* localPath =[[NSBundle mainBundle] pathForResource:localFileName ofType:@"out"];
+        // 代码修改
+        if (localPath == nil) {
+            localPath =[[NSBundle bundleForClass:[VVTempleteManager class]] pathForResource:localFileName ofType:@"out"];
+        }
+        //+++++++
         if (localFileName.length > 0 && localPath.length > 0 && [fileManager fileExistsAtPath:localPath]) {
             [[VVTemplateManager sharedManager] loadTemplateFileAsync:localPath forType:templeteType completion:nil];
             [templeteVersionDict tm_safeSetObject:@"1" forKey:@"version"];

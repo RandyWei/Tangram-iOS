@@ -35,6 +35,11 @@
     if (self = [super init]) {
         self.elementTypeMap = [[NSMutableDictionary alloc]init];
         NSString *elementMapPath = [[NSBundle mainBundle] pathForResource:@"TangramKitVVElementTypeMap" ofType:@"plist"];
+        // 代码修改
+        if (elementMapPath == nil) {
+            elementMapPath = [[NSBundle bundleForClass:[TangramDefaultItemModelFactory class]] pathForResource:@"TangramKitVVElementTypeMap" ofType:@"plist"];
+        }
+        //+++++++
         [self.elementTypeMap addEntriesFromDictionary:[TangramDefaultItemModelFactory decodeElementTypeMap:[NSArray arrayWithContentsOfFile:elementMapPath]]];
     }
     return self;

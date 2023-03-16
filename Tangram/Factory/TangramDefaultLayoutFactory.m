@@ -35,6 +35,11 @@
     if (self = [super init]) {
         _layoutTypeMap = [[NSMutableDictionary alloc]init];
         NSString *layoutMapPath = [[NSBundle mainBundle] pathForResource:@"TangramLayoutTypeMap" ofType:@"plist"];
+        // 代码修改
+        if (layoutMapPath == nil) {
+            layoutMapPath = [[NSBundle bundleForClass:[TangramDefaultLayoutFactory class]] pathForResource:@"TangramLayoutTypeMap" ofType:@"plist"];
+        }
+        //+++++++
         [_layoutTypeMap addEntriesFromDictionary:[TangramDefaultLayoutFactory decodeTypeMap:[NSArray arrayWithContentsOfFile:layoutMapPath]]];
     }
     return self;
